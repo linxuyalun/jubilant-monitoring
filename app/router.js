@@ -13,4 +13,10 @@ module.exports = app => {
   router.put('/api/pose/interval', controller.pose.interval.setInterval);
   router.get('/api/pose/channels', controller.pose.channels.getChannels);
   router.put('/api/pose/channels', controller.pose.channels.setChannels);
+  router.get('/api/pose/prowler/minTime', controller.pose.prowler.getMinTime);
+  router.put('/api/pose/prowler/minTime', controller.pose.prowler.setMinTime);
+
+  // 报警数据
+  router.get('/api/pose/prowler/statistics', controller.pose.prowler.statistics);
+  router.get('/api/pose/fallen/statistics', controller.pose.fallen.statistics);
 };
