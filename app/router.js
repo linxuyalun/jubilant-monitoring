@@ -18,5 +18,7 @@ module.exports = app => {
 
   // 报警数据
   router.get('/api/pose/prowler/statistics', controller.pose.prowler.statistics);
+  router.get('/api/pose/prowler/message', controller.pose.prowler.message);
   router.get('/api/pose/fallen/statistics', controller.pose.fallen.statistics);
+  router.get('/api/pose/fallen/message', controller.pose.fallen.message);
 };

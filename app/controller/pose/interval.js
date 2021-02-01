@@ -18,7 +18,7 @@ class PoseIntervalController extends Controller {
 
     try {
       ctx.validate({
-        interval: { type: 'int' },
+        interval: { type: 'int', min: 1 },
       });
       await ctx.service.pose.interval.setInterval(interval);
       ctx.body = {

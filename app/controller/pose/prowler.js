@@ -3,15 +3,6 @@
 const Controller = require('egg').Controller;
 
 class PoseProwlerController extends Controller {
-  async statistics() {
-    const { ctx } = this;
-    const data = await ctx.service.pose.prowler.statistics();
-    ctx.body = {
-      error: 0,
-      data,
-    };
-  }
-
   async getMinTime() {
     const { ctx } = this;
     const data = await ctx.service.pose.prowler.getMinTime();
@@ -26,7 +17,7 @@ class PoseProwlerController extends Controller {
     const { interval } = ctx.request.body;
     try {
       ctx.validate({
-        interval: { type: 'int' },
+        interval: { type: 'int', min: 1 },
       });
 
       await ctx.service.pose.prowler.setMinTime(interval);
@@ -35,6 +26,41 @@ class PoseProwlerController extends Controller {
         interval,
       };
     } catch (e) {
+      ctx.body = {
+        error: 1,
+        message: e.errors,
+      };
+    }
+  }
+
+  async statistics() {
+    const { ctx } = this;
+    const data = await ctx.service.pose.prowler.statistics();
+    ctx.body = {
+      error: 0,
+      data,
+    };
+  }
+
+  async message() {
+    const { ctx } = this;
+    const { pageIndex = '0', pageSize = '10', channelId = '0', startTime, endTime } = ctx.query;
+    try {
+      ctx.validate({
+        pageIndex: { convertType: 'int', type: 'int', min: 0, required: false },
+        pageSize: { convertType: 'int', type: 'int', min: 3, required: false },
+        channelId: { convertType: 'int', type: 'int', min: 0, required: false },
+        startTime: { type: 'date' },
+        endTime: { type: 'date' },
+      }, ctx.query);
+      const data = await ctx.service.pose.prowler.message(
+        Number(pageIndex), Number(pageSize), Number(channelId), startTime, endTime);
+      ctx.body = {
+        error: 0,
+        data,
+      };
+    } catch (e) {
+      console.log(e);
       ctx.body = {
         error: 1,
         message: e.errors,

@@ -34,7 +34,7 @@ class PoseChannelsController extends Controller {
     try {
       arr.forEach(item => {
         ctx.validate({
-          id: { type: 'int' },
+          id: { type: 'int', min: 0 },
           /**
            * type = 1，姿态（fallen）
            * type = 2，徘徊（prowler）

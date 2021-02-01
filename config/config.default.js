@@ -19,6 +19,11 @@ module.exports = appInfo => {
     domainWhiteList: [ '*' ],
   };
 
+  // open egg-validator converType
+  config.validate = {
+    convert: true,
+  };
+
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1612149515809_7837';
 
