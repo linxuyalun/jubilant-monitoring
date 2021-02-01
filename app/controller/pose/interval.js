@@ -23,7 +23,6 @@ class PoseIntervalController extends Controller {
       await ctx.service.pose.interval.setInterval(interval);
       ctx.body = {
         error: 0,
-        interval,
       };
     } catch (e) {
       console.error(e);

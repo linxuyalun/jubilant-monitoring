@@ -25,9 +25,9 @@ class PoseChannelsController extends Controller {
         url: 'rtsp://admin:rh123456@192.168.100.183:554/h264/ch1/main/av\_stream',
       },
       {
-        id: 2.1,
+        id: 2,
         location: 'gate',
-        type: 4,
+        type: 3,
         url: 'rtsp://admin:rh123456@192.168.100.183:554/h264/ch1/main/av\_stream',
       },
     ];
@@ -43,12 +43,12 @@ class PoseChannelsController extends Controller {
           type: [ 1, 2, 3 ],
         }, item);
       });
+      // FIXME: should be ctx.request.body
       await ctx.service.pose.channels.setChannels(arr);
       ctx.body = {
         error: 0,
       };
     } catch (e) {
-      console.log(e);
       ctx.body = {
         error: 1,
         message: e.errors,

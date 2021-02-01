@@ -2,17 +2,22 @@
 
 const Service = require('egg').Service;
 
+const fs = require('fs');
 class PoseIntervalService extends Service {
-  // TODO: 从数据库获取数据
   async getInterval() {
+    const data = fs.readFileSync('./config/monitoring.settings.json', 'utf-8');
+    const settings = JSON.parse(data);
     return {
-      interval: 5,
+      interval: settings.poseInterval,
     };
   }
 
   async setInterval(interval) {
-    // TODO: 修改数据库 interval 参数
-    console.log(interval);
+    const data = fs.readFileSync('./config/monitoring.settings.json', 'utf-8');
+    const settings = JSON.parse(data);
+    settings.poseInterval = interval;
+    const str = JSON.stringify(settings);
+    fs.writeFileSync('./config/monitoring.settings.json', str);
   }
 }
 

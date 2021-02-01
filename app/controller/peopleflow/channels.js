@@ -14,8 +14,6 @@ class PeopleflowChannelsController extends Controller {
 
   async setChannels() {
     const { ctx } = this;
-    // const arr = ctx.request.body;
-    // FIXME: Mock data here
     try {
       ctx.validate({
         id: { type: 'int', min: 0 },
@@ -27,7 +25,6 @@ class PeopleflowChannelsController extends Controller {
         error: 0,
       };
     } catch (e) {
-      console.log(e);
       ctx.body = {
         error: 1,
         message: e.errors,

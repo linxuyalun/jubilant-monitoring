@@ -19,9 +19,12 @@ module.exports = appInfo => {
     domainWhiteList: [ '*' ],
   };
 
-  // open egg-validator converType
-  config.validate = {
-    convert: true,
+  // mongodb
+  config.mongoose = {
+    client: {
+      url: 'mongodb://127.0.0.1/test',
+      options: {},
+    },
   };
 
   // use for cookie sign key, should change to your own and keep security

@@ -30,7 +30,6 @@ class PoseFallenController extends Controller {
         data,
       };
     } catch (e) {
-      console.log(e);
       ctx.body = {
         error: 1,
         message: e.errors,

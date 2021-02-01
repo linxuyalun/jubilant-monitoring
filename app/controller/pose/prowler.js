@@ -23,7 +23,6 @@ class PoseProwlerController extends Controller {
       await ctx.service.pose.prowler.setMinTime(interval);
       ctx.body = {
         error: 0,
-        interval,
       };
     } catch (e) {
       ctx.body = {
@@ -60,7 +59,6 @@ class PoseProwlerController extends Controller {
         data,
       };
     } catch (e) {
-      console.log(e);
       ctx.body = {
         error: 1,
         message: e.errors,

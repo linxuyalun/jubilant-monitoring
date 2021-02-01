@@ -1,18 +1,22 @@
 'use strict';
 
 const Service = require('egg').Service;
-
+const fs = require('fs');
 class PoseProwlerService extends Service {
-  // TODO: 从数据库获取数据
   async getMinTime() {
+    const data = fs.readFileSync('./config/monitoring.settings.json', 'utf-8');
+    const settings = JSON.parse(data);
     return {
-      interval: 5,
+      interval: settings.poseProwlerMinTime,
     };
   }
 
   async setMinTime(interval) {
-    // TODO: 修改数据库 interval 参数
-    console.log(interval);
+    const data = fs.readFileSync('./config/monitoring.settings.json', 'utf-8');
+    const settings = JSON.parse(data);
+    settings.poseProwlerMinTime = interval;
+    const str = JSON.stringify(settings);
+    fs.writeFileSync('./config/monitoring.settings.json', str);
   }
 
   // TODO: 从数据库获取数据
