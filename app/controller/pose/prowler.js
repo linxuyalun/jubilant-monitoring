@@ -25,21 +25,19 @@ class PoseProwlerController extends Controller {
     const { ctx } = this;
     const { interval } = ctx.request.body;
     try {
-      const num = Number(interval);
-      if (isNaN(num) || num <= 0) {
-        throw new Error('设置徘徊最小时间失败，传入参数 interval 不合法。');
-      }
+      ctx.validate({
+        interval: { type: 'int' },
+      });
 
-      await ctx.service.pose.prowler.setMinTime(Math.ceil(num));
+      await ctx.service.pose.prowler.setMinTime(interval);
       ctx.body = {
         error: 0,
         interval,
       };
     } catch (e) {
-      console.error(e);
       ctx.body = {
         error: 1,
-        message: e.message,
+        message: e.errors,
       };
     }
   }

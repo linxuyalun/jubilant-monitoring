@@ -32,6 +32,17 @@ class PoseChannelsController extends Controller {
       },
     ];
     try {
+      arr.forEach(item => {
+        ctx.validate({
+          id: { type: 'int' },
+          /**
+           * type = 1，姿态（fallen）
+           * type = 2，徘徊（prowler）
+           * type = 3，两者皆有
+           */
+          type: [ 1, 2, 3 ],
+        }, item);
+      });
       await ctx.service.pose.channels.setChannels(arr);
       ctx.body = {
         error: 0,
@@ -40,7 +51,7 @@ class PoseChannelsController extends Controller {
       console.log(e);
       ctx.body = {
         error: 1,
-        message: e.message,
+        message: e.errors,
       };
     }
   }
