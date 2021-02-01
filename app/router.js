@@ -19,8 +19,10 @@ module.exports = app => {
   // 报警数据
   router.get('/api/pose/prowler/statistics', controller.pose.prowler.statistics);
   router.get('/api/pose/prowler/message', controller.pose.prowler.message);
+  router.put('/api/pose/prowler/recording', controller.pose.prowler.recording);
   router.get('/api/pose/fallen/statistics', controller.pose.fallen.statistics);
   router.get('/api/pose/fallen/message', controller.pose.fallen.message);
+  router.put('/api/pose/fallen/recording', controller.pose.fallen.recording);
 
   // 人流算法模块
   // 配置相关

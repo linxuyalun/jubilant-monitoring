@@ -3,6 +3,10 @@
 const Service = require('egg').Service;
 
 class PoseFallenService extends Service {
+  async recording(data) {
+    await this.ctx.model.Fallen.create(data);
+  }
+
   // TODO: 从数据库获取数据
   async statistics() {
     // FIXME: Mock data here
@@ -24,42 +28,31 @@ class PoseFallenService extends Service {
   }
 
   async message(pageIndex, pageSize, channelId, startTime, endTime) {
-    console.log(pageIndex, pageSize, channelId, startTime, endTime);
+    const total = await this.ctx.model.Fallen.count();
+
+    // 将传入的参数转为日期格式，起始日期为入参日期的0点，截止日期为入参日期的24点
+    const startDate = new Date(startTime);
+    const endDate = new Date(endTime);
+    endDate.setDate(endDate.getDate() + 1);
+    const timeSearch = { time: { $gte: startDate, $lt: endDate } };
+
+    // channelId 为 0 表示所有
+    const search = channelId === 0 ? timeSearch : { channelId, ...timeSearch };
+
+    const data = await this.ctx.model.Fallen.find(search)
+      .sort({ _id: -1 })
+      .skip(pageSize * pageIndex)
+      .limit(pageSize);
+
+    const arr = data.map(item => {
+      const { time, channelId, location, images, bbox } = item;
+      const formatTime = time.toISOString().replace('T', ' ').slice(0, 19);
+      return { time: formatTime, channelId, location, images, bbox };
+    });
     return {
-      total: 24,
-      size: 2,
-      data: [
-        {
-          time: '2021-01-27 14:17:35',
-          channelId: 1,
-          location: '大门',
-          images: {
-            person: 'tommy',
-            scene: 'wow',
-          },
-          bbox: {
-            x: 100,
-            y: 100,
-            width: 100,
-            height: 100,
-          },
-        },
-        {
-          time: '2021-01-27 14:19:35',
-          channelId: 1,
-          location: '侧门',
-          images: {
-            person: 'tommy',
-            scene: 'wow',
-          },
-          bbox: {
-            x: 100,
-            y: 100,
-            width: 100,
-            height: 100,
-          },
-        },
-      ],
+      total,
+      size: pageSize,
+      data: arr,
     };
   }
 }

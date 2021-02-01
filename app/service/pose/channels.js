@@ -3,7 +3,6 @@
 const Service = require('egg').Service;
 const fs = require('fs');
 class PoseChannelsService extends Service {
-  // TODO: 从数据库获取数据
   async getChannels() {
     const data = fs.readFileSync('./config/monitoring.settings.json', 'utf-8');
     const settings = JSON.parse(data);
