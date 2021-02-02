@@ -13,7 +13,6 @@ class PeopleflowChannelsService extends Service {
 
   async setChannels(data) {
     // 检查 channels
-    // TODO: id 与日海传感器管理的摄像头 id 对应，需要检查数据库 id 与这里的 id 有没有对上
     const raw = fs.readFileSync('./config/monitoring.settings.json', 'utf-8');
     const settings = JSON.parse(raw);
     settings.peopleflowChannels = data;
