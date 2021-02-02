@@ -23,24 +23,25 @@ class PoseProwlerService extends Service {
     await this.ctx.model.Prowler.create(data);
   }
 
-  // TODO: 从数据库获取数据
   async statistics() {
-    // FIXME: Mock data here
-    // id = 0 是所有摄像头合计值
-    // quantity 是报警消息数量
-    const arr = [
-      {
-        id: 0,
-        location: 'wow',
-        quantity: 3,
-      },
-      {
-        id: 1,
-        location: 'wow',
-        quantity: 2,
-      },
-    ];
-    return arr;
+    const { poseChannels } = JSON.parse(fs.readFileSync('./config/monitoring.settings.json', 'utf-8'));
+    let sum = 0;
+    const statistics = [];
+    for (let i = 0; i < poseChannels.length; i++) {
+      const quantity = await this.ctx.model.Prowler.count({ channelId: poseChannels[i].id });
+      sum += quantity;
+      statistics.push({
+        id: poseChannels[i].id,
+        location: poseChannels[i].location,
+        quantity,
+      });
+    }
+    statistics.push({
+      id: 0,
+      location: '全部',
+      quantity: sum,
+    });
+    return statistics;
   }
 
   async message(pageIndex, pageSize, channelId, startTime, endTime) {
