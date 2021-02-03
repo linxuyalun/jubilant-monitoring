@@ -32,7 +32,7 @@ class PoseProwlerService extends Service {
       channelId: Number(raw.cameraId),
       location: channelInfo[0].location,
       images: {
-        person: raw.image,
+        person: raw.bbox.image,
         scene: originImage,
       },
       peopleId: raw.bbox.peopleId,
