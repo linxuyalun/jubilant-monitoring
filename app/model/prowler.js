@@ -7,6 +7,10 @@ module.exports = app => {
     time: {
       type: Date,
     },
+    timestamp: {
+      type: Number,
+      required: true,
+    },
     channelId: {
       type: Number,
       required: true,
@@ -29,19 +33,19 @@ module.exports = app => {
       },
     },
     bbox: {
-      x: {
+      x0: {
         type: Number,
         default: 0,
       },
-      y: {
+      y0: {
         type: Number,
         default: 0,
       },
-      width: {
+      x1: {
         type: Number,
         default: 0,
       },
-      height: {
+      y1: {
         type: Number,
         default: 0,
       },

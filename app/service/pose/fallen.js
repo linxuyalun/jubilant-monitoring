@@ -4,7 +4,29 @@ const Service = require('egg').Service;
 const fs = require('fs');
 
 class PoseFallenService extends Service {
-  async recording(data) {
+  async recording(raw) {
+    const { settings } = fs.readFileSync('./config/monitoring.settings.json', 'utf-8');
+    const channelInfo = settings.poseChannels.filter(item => item.id === Number(raw.cameraId));
+    const originImage = await this.app.redis.get(`${raw.cameraId}-${raw.timestamp}`);
+    // 8 hours lag
+    const now = new Date();
+    now.setHours(now.getHours() + 8);
+    const data = {
+      time: now,
+      timestamp: raw.timestamp,
+      channelId: Number(raw.cameraId),
+      location: channelInfo[0].location,
+      images: {
+        person: raw.image,
+        scene: originImage,
+      },
+      bbox: {
+        x0: raw.bbox.x0,
+        y0: raw.bbox.y0,
+        x1: raw.bbox.x1,
+        y1: raw.bbox.y1,
+      },
+    };
     await this.ctx.model.Fallen.create(data);
   }
 

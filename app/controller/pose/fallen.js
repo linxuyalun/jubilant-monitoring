@@ -5,26 +5,8 @@ const Controller = require('egg').Controller;
 class PoseFallenController extends Controller {
   async recording() {
     const { ctx } = this;
-    // FIXME: Mock data here
-    // 8 hours lag
-    const now = new Date();
-    now.setHours(now.getHours() + 8);
-    const data = {
-      time: now,
-      channelId: 1,
-      location: 'gate',
-      images: {
-        person: 'person',
-        scene: 'scene',
-      },
-      bbox: {
-        x: 0,
-        y: 0,
-        width: 100,
-        height: 100,
-      },
-    };
-    await ctx.service.pose.fallen.recording(data);
+    const raw = ctx.request.body;
+    await ctx.service.pose.prowler.recording(raw);
     ctx.body = {
       error: 0,
     };
