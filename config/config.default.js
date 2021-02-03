@@ -38,6 +38,12 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
+  config.cluster = {
+    listen: {
+      port: 7100,
+    },
+  };
+
   return {
     ...config,
     ...userConfig,
