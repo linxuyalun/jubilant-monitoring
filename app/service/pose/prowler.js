@@ -22,7 +22,7 @@ class PoseProwlerService extends Service {
   async recording(raw) {
     const { poseChannels } = JSON.parse(fs.readFileSync('./config/monitoring.settings.json', 'utf-8'));
     const channelInfo = poseChannels.filter(item => item.id === Number(raw.cameraId));
-    const originImage = await this.app.redis.get(`${raw.cameraId}-${raw.timestamp}`);
+    const originImage = await this.app.redis.get(raw.cameraId + raw.timestamp);
     // 8 hours lag
     const now = new Date();
     now.setHours(now.getHours() + 8);
