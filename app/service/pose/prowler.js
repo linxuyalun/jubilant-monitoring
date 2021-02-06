@@ -17,6 +17,8 @@ class PoseProwlerService extends Service {
     settings.poseProwlerMinTime = interval;
     const str = JSON.stringify(settings);
     fs.writeFileSync('./config/monitoring.settings.json', str);
+    // Send prowler interval to redis to inform the AI module handle the interval
+    await this.app.redis.publish('interval', interval);
   }
 
   async recording(raw) {
