@@ -2,11 +2,11 @@
 
 const Controller = require('egg').Controller;
 
-class PoseFallenController extends Controller {
+class PoseTrackingController extends Controller {
   async recording() {
     const { ctx } = this;
     const raw = ctx.request.body;
-    await ctx.service.pose.fallen.recording(raw);
+    await ctx.service.pose.tracking.recording(raw);
     ctx.body = {
       error: 0,
     };
@@ -14,7 +14,7 @@ class PoseFallenController extends Controller {
 
   async statistics() {
     const { ctx } = this;
-    const data = await ctx.service.pose.fallen.statistics();
+    const data = await ctx.service.pose.tracking.statistics();
     ctx.body = {
       error: 0,
       data,
@@ -32,7 +32,7 @@ class PoseFallenController extends Controller {
         startTime: { type: 'date' },
         endTime: { type: 'date' },
       }, ctx.query);
-      const data = await ctx.service.pose.fallen.message(
+      const data = await ctx.service.pose.tracking.message(
         Number(pageIndex), Number(pageSize), Number(channelId), startTime, endTime);
       ctx.body = {
         error: 0,
@@ -47,4 +47,4 @@ class PoseFallenController extends Controller {
   }
 }
 
-module.exports = PoseFallenController;
+module.exports = PoseTrackingController;

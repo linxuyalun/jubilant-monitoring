@@ -33,16 +33,6 @@ class PeopleflowChannelsController extends Controller {
       };
     }
   }
-
-  // TODO: Not done yet.
-  async monitoring() {
-    const { ctx } = this;
-    const data = await ctx.service.peopleflow.channels.monitoring();
-    ctx.body = {
-      error: 0,
-      data,
-    };
-  }
 }
 
 module.exports = PeopleflowChannelsController;

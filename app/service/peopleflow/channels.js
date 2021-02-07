@@ -19,20 +19,6 @@ class PeopleflowChannelsService extends Service {
     const str = JSON.stringify(settings);
     fs.writeFileSync('./config/monitoring.settings.json', str);
   }
-
-  async monitoring() {
-    const data = {
-      id: 1,
-      time: '2021-01-27 15:17:35',
-      location: '大门',
-      in: 12,
-      out: 14,
-      total: 8,
-      x: [ 12, 15, 49, 12, 23, 49, 60, 90 ],
-      y: [ 12, 15, 49, 12, 23, 49, 60, 90 ],
-    };
-    return data;
-  }
 }
 
 module.exports = PeopleflowChannelsService;
