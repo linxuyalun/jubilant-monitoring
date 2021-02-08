@@ -7,11 +7,8 @@ class PoseTrackingService extends Service {
     const { poseChannels } = JSON.parse(fs.readFileSync('./config/monitoring.settings.json', 'utf-8'));
     const channelInfo = poseChannels.filter(item => item.id === Number(raw.cameraId));
     const originImage = await this.app.redis.get(raw.cameraId + raw.timestamp);
-    // 8 hours lag
-    const now = new Date();
-    now.setHours(now.getHours() + 8);
     const data = {
-      time: now,
+      time: this.ctx.helper.getTimeNow(),
       timestamp: raw.timestamp,
       channelId: Number(raw.cameraId),
       location: channelInfo[0].location,
@@ -70,7 +67,7 @@ class PoseTrackingService extends Service {
 
     const arr = data.map(item => {
       const { time, channelId, peopleId, location, images, bbox } = item;
-      const formatTime = time.toISOString().replace('T', ' ').slice(0, 19);
+      const formatTime = this.ctx.helper.getFriendlyTime(time);
       return { time: formatTime, channelId, peopleId, location, images, bbox };
     });
     return {
