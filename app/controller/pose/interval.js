@@ -2,6 +2,9 @@
 
 const Controller = require('egg').Controller;
 
+/**
+ * getInterval 和 setInterval 目前没有任何用处，只是单纯对值进行了保存
+ */
 class PoseIntervalController extends Controller {
   async getInterval() {
     const { ctx } = this;

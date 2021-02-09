@@ -1,1 +1,1 @@
-{"poseInterval":1,"poseChannels":[{"id":100,"location":"gate"},{"id":2,"location":"garden"}],"poseProwlerMinTime":1,"peopleflowChannels":{"id":100,"location":"gate"},"channelList":[100,2]}
+{"poseInterval":1,"poseProwlerMinTime":1}

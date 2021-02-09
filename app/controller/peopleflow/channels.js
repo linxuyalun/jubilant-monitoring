@@ -1,7 +1,6 @@
 'use strict';
 
 const Controller = require('egg').Controller;
-const fs = require('fs');
 
 class PeopleflowChannelsController extends Controller {
   async getChannels() {
@@ -15,10 +14,10 @@ class PeopleflowChannelsController extends Controller {
 
   async setChannels() {
     const { ctx } = this;
-    const { channelList } = JSON.parse(fs.readFileSync('./config/monitoring.settings.json', 'utf-8'));
     try {
       ctx.validate({
-        id: channelList,
+        // TODO: Check the id existence.
+        id: { type: 'int' },
         location: { type: 'string' },
         url: { type: 'string' },
       });

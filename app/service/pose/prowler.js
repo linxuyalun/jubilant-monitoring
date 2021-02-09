@@ -22,7 +22,11 @@ class PoseProwlerService extends Service {
   }
 
   async recording(raw) {
-    const { poseChannels } = JSON.parse(fs.readFileSync('./config/monitoring.settings.json', 'utf-8'));
+    const poseChannelsRaw = await this.app.redis.get('poseChannels');
+    const poseChannels = JSON.parse(poseChannelsRaw);
+    if (!poseChannels) {
+      return;
+    }
     const channelInfo = poseChannels.filter(item => item.id === Number(raw.cameraId));
     const originImage = await this.app.redis.get(raw.cameraId + raw.timestamp);
     const data = {
@@ -46,7 +50,11 @@ class PoseProwlerService extends Service {
   }
 
   async statistics() {
-    const { poseChannels } = JSON.parse(fs.readFileSync('./config/monitoring.settings.json', 'utf-8'));
+    const raw = await this.app.redis.get('poseChannels');
+    let poseChannels = JSON.parse(raw);
+    if (!poseChannels) {
+      poseChannels = [];
+    }
     let sum = 0;
     const statistics = [];
     for (let i = 0; i < poseChannels.length; i++) {

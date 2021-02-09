@@ -1,7 +1,6 @@
 'use strict';
 
 const Service = require('egg').Service;
-const fs = require('fs');
 
 class PeopleflowRecordingService extends Service {
   async recording(raw) {
@@ -12,12 +11,16 @@ class PeopleflowRecordingService extends Service {
      * peopleX array<float>	人位置世界坐标X数组; peopleY array<float> 人位置世界坐标Y数组.
      */
     const { cameraId, time, peopleIN, peopleOUT, peopleNUMBER, peopleX, peopleY } = raw;
-    const { peopleflowChannels } = JSON.parse(fs.readFileSync('./config/monitoring.settings.json', 'utf-8'));
+    const peopleflowChannelRaw = await this.app.redis.get('peopleflowChannel');
+    const peopleflowChannel = JSON.parse(peopleflowChannelRaw);
+    if (!peopleflowChannel || JSON.stringify(peopleflowChannel) === '{}') {
+      return;
+    }
     const data = {
       time: this.ctx.helper.getTimeNow(),
       timestamp: time,
       channelId: Number(cameraId),
-      location: peopleflowChannels.location,
+      location: peopleflowChannel.location,
       in: peopleIN,
       out: peopleOUT,
       total: peopleNUMBER,
