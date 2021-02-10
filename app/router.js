@@ -32,7 +32,7 @@ module.exports = app => {
   router.get('/api/peopleflow/channels', controller.peopleflow.channels.getChannels);
   router.put('/api/peopleflow/channels', controller.peopleflow.channels.setChannels);
   // 报警数据
-  router.put('/api/peopleflow/recording', controller.peopleflow.recording.recording);
+  router.post('/api/peopleflow/recording', controller.peopleflow.recording.recording);
   // 数据相关
   router.get('/api/peopleflow/monitoring', controller.peopleflow.recording.monitoring);
 
