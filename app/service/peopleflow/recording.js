@@ -10,7 +10,7 @@ class PeopleflowRecordingService extends Service {
      * peopleIN	int	1s内进入人数; peopleOUT	int	1s内出去人数; peopleNUM	int	监控范围内实时人数;
      * peopleX array<float>	人位置世界坐标X数组; peopleY array<float> 人位置世界坐标Y数组.
      */
-    const { cameraId, time, peopleIN, peopleOUT, peopleNUMBER, peopleX, peopleY } = raw;
+    const { cameraId, time, peopleIN, peopleOUT, peopleNUM, peopleX, peopleY } = raw;
     const peopleflowChannelRaw = await this.app.redis.get('peopleflowChannel');
     const peopleflowChannel = JSON.parse(peopleflowChannelRaw);
     if (!peopleflowChannel || JSON.stringify(peopleflowChannel) === '{}') {
@@ -23,11 +23,12 @@ class PeopleflowRecordingService extends Service {
       location: peopleflowChannel.location,
       in: peopleIN,
       out: peopleOUT,
-      total: peopleNUMBER,
+      total: peopleNUM,
       x: peopleX,
       y: peopleY,
     };
     await this.ctx.model.Peopleflow.create(data);
+    console.log('SUCCESS')
   }
 
   async monitoring() {
