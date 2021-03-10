@@ -18,13 +18,13 @@ module.exports = app => {
   router.put('/api/pose/prowler/minTime', controller.pose.prowler.setMinTime);
   // 报警数据
   router.get('/api/pose/prowler/statistics', controller.pose.prowler.statistics);
-  router.get('/api/pose/prowler/message', controller.pose.prowler.message);
+  router.get('/api/pose/prowler/messages', controller.pose.prowler.message);
   router.put('/api/pose/prowler/recording', controller.pose.prowler.recording);
   router.get('/api/pose/fallen/statistics', controller.pose.fallen.statistics);
-  router.get('/api/pose/fallen/message', controller.pose.fallen.message);
+  router.get('/api/pose/fallen/messages', controller.pose.fallen.message);
   router.put('/api/pose/fallen/recording', controller.pose.fallen.recording);
   router.get('/api/pose/tracking/statistics', controller.pose.tracking.statistics);
-  router.get('/api/pose/tracking/message', controller.pose.tracking.message);
+  router.get('/api/pose/tracking/messages', controller.pose.tracking.message);
   router.put('/api/pose/tracking/recording', controller.pose.tracking.recording);
 
   // 人流算法模块
