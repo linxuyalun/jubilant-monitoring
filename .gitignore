@@ -13,3 +13,6 @@ run/
 typings/
 .nyc_output/
 .vscode
+
+*.out
+*.log

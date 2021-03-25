@@ -24,6 +24,7 @@ class PoseChannelsController extends Controller {
           type: [ 1, 2, 3 ],
           location: { type: 'string' },
           url: { type: 'string' },
+          enable: { type: 'bool' },
         }, item);
       });
       await ctx.service.pose.channels.setChannels(arr);

@@ -20,6 +20,7 @@ class PeopleflowChannelsController extends Controller {
         id: { type: 'int' },
         location: { type: 'string' },
         url: { type: 'string' },
+        enable: { type: 'bool' },
       });
       await ctx.service.peopleflow.channels.setChannels(ctx.request.body);
       ctx.body = {
