@@ -28,7 +28,6 @@ class PeopleflowRecordingService extends Service {
       y: peopleY,
     };
     await this.ctx.model.Peopleflow.create(data);
-    console.log('SUCCESS')
   }
 
   async monitoring() {

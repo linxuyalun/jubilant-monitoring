@@ -14,6 +14,8 @@ module.exports = app => {
   router.put('/api/pose/interval', controller.pose.interval.setInterval);
   router.get('/api/pose/channels', controller.pose.channels.getChannels);
   router.put('/api/pose/channels', controller.pose.channels.setChannels);
+  router.get('/api/pose/status', controller.pose.status.getStatus);
+  router.put('/api/pose/status', controller.pose.status.setStatus);
   router.get('/api/pose/prowler/minTime', controller.pose.prowler.getMinTime);
   router.put('/api/pose/prowler/minTime', controller.pose.prowler.setMinTime);
   // 报警数据
@@ -31,6 +33,8 @@ module.exports = app => {
   // 配置相关
   router.get('/api/peopleflow/channels', controller.peopleflow.channels.getChannels);
   router.put('/api/peopleflow/channels', controller.peopleflow.channels.setChannels);
+  router.get('/api/peopleflow/status', controller.peopleflow.status.getStatus);
+  router.put('/api/peopleflow/status', controller.peopleflow.status.setStatus);
   // 报警数据
   router.post('/api/peopleflow/recording', controller.peopleflow.recording.recording);
   // 数据相关
