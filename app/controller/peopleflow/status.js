@@ -14,7 +14,7 @@ class PeopleflowStatusController extends Controller {
     };
   }
 
-  async setChannels() {
+  async setStatus() {
     const { ctx } = this;
     try {
       ctx.validate({
