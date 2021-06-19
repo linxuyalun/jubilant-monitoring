@@ -29,8 +29,8 @@ class PoseFallenController extends Controller {
         pageIndex: { convertType: 'int', type: 'int', min: 0, required: false },
         pageSize: { convertType: 'int', type: 'int', min: 3, required: false },
         channelId: { convertType: 'int', type: 'int', min: 0, required: false },
-        startTime: { type: 'date' },
-        endTime: { type: 'date' },
+        startTime: { type: 'dateTime' },
+        endTime: { type: 'dateTime' },
       }, ctx.query);
       const data = await ctx.service.pose.fallen.message(
         Number(pageIndex), Number(pageSize), Number(channelId), startTime, endTime);
