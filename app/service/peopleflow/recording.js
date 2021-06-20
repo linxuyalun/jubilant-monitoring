@@ -33,6 +33,9 @@ class PeopleflowRecordingService extends Service {
 
   async monitoring() {
     const data = await this.ctx.model.Peopleflow.findOne().sort({ _id: -1 });
+    if (data === null) {
+      return {};
+    }
     return {
       id: data.channelId,
       time: data.time,
