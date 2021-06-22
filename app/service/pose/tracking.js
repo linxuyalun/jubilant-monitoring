@@ -56,8 +56,6 @@ class PoseTrackingService extends Service {
   }
 
   async message(pageIndex, pageSize, channelId, startTime, endTime) {
-    const total = await this.ctx.model.Tracking.count();
-
     // 将传入的参数转为日期格式，起始日期为入参日期的0点，截止日期为入参日期的24点
     const startDate = new Date(startTime);
     const endDate = new Date(endTime);
@@ -67,6 +65,7 @@ class PoseTrackingService extends Service {
     // channelId 为 0 表示所有
     const search = channelId === 0 ? timeSearch : { channelId, ...timeSearch };
 
+    const total = await this.ctx.model.Tracking.find(search).count();
     const data = await this.ctx.model.Tracking.find(search)
       .sort({ _id: -1 })
       .skip(pageSize * pageIndex)
