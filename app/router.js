@@ -8,6 +8,10 @@ module.exports = app => {
   // FIXME: For test
   router.get('/', controller.home.index);
 
+  // 系统模式设置
+  router.get('/api/system/mode', controller.system.system.getMode);
+  router.put('/api/system/mode', controller.system.system.setMode);
+
   // 行为识别算法模块
   // 配置相关
   router.get('/api/pose/interval', controller.pose.interval.getInterval);
