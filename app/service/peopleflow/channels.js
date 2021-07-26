@@ -3,13 +3,12 @@
 const Service = require('egg').Service;
 
 const channelName = 'peopleflowChannels';
-
 class PeopleflowChannelsService extends Service {
   async getChannels() {
     const raw = await this.app.redis.get(channelName);
     const peopleflowChannels = JSON.parse(raw);
     if (!peopleflowChannels) {
-      await this.app.redis.set(channelName, '{}');
+      await this.app.redis.set(channelName, '[]');
       return [];
     }
     return peopleflowChannels;
