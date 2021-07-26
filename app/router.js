@@ -42,6 +42,6 @@ module.exports = app => {
   // 报警数据
   router.post('/api/peopleflow/recording', controller.peopleflow.recording.recording);
   // 数据相关
-  router.get('/api/peopleflow/monitoring', controller.peopleflow.recording.monitoring);
+  router.get('/api/peopleflow/monitoring/:channelId', controller.peopleflow.recording.monitoring);
 
 };

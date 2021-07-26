@@ -14,7 +14,15 @@ class PeopleflowRecordingController extends Controller {
 
   async monitoring() {
     const { ctx } = this;
-    const data = await ctx.service.peopleflow.recording.monitoring();
+    const channelId = Number(ctx.request.channelId);
+    if (isNaN(channelId)) {
+      ctx.body = {
+        error: 1,
+        message: 'invalid channelId, channelId should be a number',
+      };
+      return;
+    }
+    const data = await ctx.service.peopleflow.recording.monitoring(channelId);
     ctx.body = {
       error: 0,
       data,

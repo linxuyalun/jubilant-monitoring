@@ -12,16 +12,20 @@ class PeopleflowRecordingService extends Service {
      */
     // NOTE: the data from upstream is a slice, we only need the first element
     const { cameraId, time, peopleIN, peopleOUT, peopleNUM, peopleX, peopleY } = raw[0];
-    const peopleflowChannelRaw = await this.app.redis.get('peopleflowChannel');
-    const peopleflowChannel = JSON.parse(peopleflowChannelRaw);
-    if (!peopleflowChannel || JSON.stringify(peopleflowChannel) === '{}') {
+    const peopleflowChannelRaw = await this.app.redis.get('peopleflowChannels');
+    const peopleflowChannels = JSON.parse(peopleflowChannelRaw);
+    if (!peopleflowChannels || JSON.stringify(peopleflowChannels) === '[]') {
+      return;
+    }
+    const channelInfo = peopleflowChannels.filter(item => item.id === Number(raw.cameraId));
+    if (channelInfo.length === 0) {
       return;
     }
     const data = {
       time: this.ctx.helper.getTimeNow(),
       timestamp: time,
       channelId: Number(cameraId),
-      location: peopleflowChannel.location,
+      location: channelInfo[0].location,
       in: peopleIN,
       out: peopleOUT,
       total: peopleNUM,
@@ -31,8 +35,12 @@ class PeopleflowRecordingService extends Service {
     await this.ctx.model.Peopleflow.create(data);
   }
 
-  async monitoring() {
-    const data = await this.ctx.model.Peopleflow.findOne().sort({ _id: -1 });
+  /**
+   * @param {number} channelId 摄像头 ID
+   */
+  async monitoring(channelId) {
+    const search = { channelId };
+    const data = await this.ctx.model.Peopleflow.findOne(search).sort({ _id: -1 });
     if (data === null) {
       return {};
     }
