@@ -14,15 +14,18 @@ class PeopleflowChannelsController extends Controller {
 
   async setChannels() {
     const { ctx } = this;
+    const arr = ctx.request.body;
     try {
-      ctx.validate({
-        // TODO: Check the id existence.
-        id: { type: 'int' },
-        location: { type: 'string' },
-        url: { type: 'string' },
-        enable: { type: 'bool' },
+      arr.forEach(item => {
+        ctx.validate({
+          // TODO: Check the id existence.
+          id: { type: 'int' },
+          location: { type: 'string' },
+          url: { type: 'string' },
+          enable: { type: 'bool' },
+        }, item);
       });
-      await ctx.service.peopleflow.channels.setChannels(ctx.request.body);
+      await ctx.service.peopleflow.channels.setChannels(arr);
       ctx.body = {
         error: 0,
       };
