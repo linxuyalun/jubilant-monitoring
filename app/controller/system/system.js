@@ -31,6 +31,14 @@ class SystemController extends Controller {
       };
     }
   }
+
+  async getHistory() {
+    const data = await this.service.system.system.getHistory();
+    this.ctx.body = {
+      error: 0,
+      data,
+    };
+  }
 }
 
 module.exports = SystemController;

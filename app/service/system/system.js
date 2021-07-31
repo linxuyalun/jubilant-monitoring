@@ -16,6 +16,13 @@ class SystemService extends Service {
     await this.app.redis.set('mode', mode);
   }
 
+  async getHistory() {
+    const data = await this.ctx.model.History.find()
+      .sort({ _id: -1 })
+      .limit(10);
+    return data;
+  }
+
 }
 
 module.exports = SystemService;

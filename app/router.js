@@ -11,6 +11,8 @@ module.exports = app => {
   // 系统模式设置
   router.get('/api/system/mode', controller.system.system.getMode);
   router.put('/api/system/mode', controller.system.system.setMode);
+  // 历史数据清理记录
+  router.get('/api/system/cleanHistory', controller.system.system.getHistory);
 
   // 行为识别算法模块
   // 配置相关
