@@ -1,9 +1,10 @@
 'use strict';
 
 const Service = require('egg').Service;
+const { REDIS_STATUS } = require('../../constant.js');
 class PoseTrackingService extends Service {
   async recording(raw) {
-    const poseChannelsRaw = await this.app.redis.get('poseChannels');
+    const poseChannelsRaw = await this.app.redis.get(REDIS_STATUS.POSE_CHANNELS);
     const poseChannels = JSON.parse(poseChannelsRaw);
     if (!poseChannels) {
       return;
@@ -31,7 +32,7 @@ class PoseTrackingService extends Service {
   }
 
   async statistics() {
-    const raw = await this.app.redis.get('poseChannels');
+    const raw = await this.app.redis.get(REDIS_STATUS.POSE_CHANNELS);
     let poseChannels = JSON.parse(raw);
     if (!poseChannels) {
       poseChannels = [];

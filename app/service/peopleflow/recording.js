@@ -2,6 +2,8 @@
 
 const Service = require('egg').Service;
 
+const { REDIS_STATUS } = require('../../constant.js');
+
 class PeopleflowRecordingService extends Service {
   async recording(raw) {
     /**
@@ -12,7 +14,7 @@ class PeopleflowRecordingService extends Service {
      */
     // NOTE: the data from upstream is a slice, we only need the first element
     const { cameraId, time, peopleIN, peopleOUT, peopleNUM, peopleX, peopleY } = raw[0];
-    const peopleflowChannelRaw = await this.app.redis.get('peopleflowChannels');
+    const peopleflowChannelRaw = await this.app.redis.get(REDIS_STATUS.PEOPLEFLOW_CHANNELS);
     const peopleflowChannels = JSON.parse(peopleflowChannelRaw);
     if (!peopleflowChannels || JSON.stringify(peopleflowChannels) === '[]') {
       return;

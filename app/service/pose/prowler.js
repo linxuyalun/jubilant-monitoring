@@ -1,6 +1,7 @@
 'use strict';
 
 const Service = require('egg').Service;
+const { REDIS_STATUS } = require('../../constant.js');
 const fs = require('fs');
 class PoseProwlerService extends Service {
   async getMinTime() {
@@ -18,11 +19,11 @@ class PoseProwlerService extends Service {
     const str = JSON.stringify(settings);
     fs.writeFileSync('./config/monitoring.settings.json', str);
     // Send prowler interval to redis to inform the AI module handle the interval
-    await this.app.redis.publish('interval', interval);
+    await this.app.redis.publish(REDIS_STATUS.INTERVAL, interval);
   }
 
   async recording(raw) {
-    const poseChannelsRaw = await this.app.redis.get('poseChannels');
+    const poseChannelsRaw = await this.app.redis.get(REDIS_STATUS.POSE_CHANNELS);
     const poseChannels = JSON.parse(poseChannelsRaw);
     if (!poseChannels) {
       return;
@@ -50,7 +51,7 @@ class PoseProwlerService extends Service {
   }
 
   async statistics() {
-    const raw = await this.app.redis.get('poseChannels');
+    const raw = await this.app.redis.get(REDIS_STATUS.POSE_CHANNELS);
     let poseChannels = JSON.parse(raw);
     if (!poseChannels) {
       poseChannels = [];
