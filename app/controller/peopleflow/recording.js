@@ -14,7 +14,7 @@ class PeopleflowRecordingController extends Controller {
 
   async monitoring() {
     const { ctx } = this;
-    const channelId = Number(ctx.request.channelId);
+    const channelId = Number(ctx.params.channelId);
     if (isNaN(channelId)) {
       ctx.body = {
         error: 1,
