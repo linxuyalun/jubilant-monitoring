@@ -19,9 +19,9 @@ class PeopleflowRecordingService extends Service {
     if (!peopleflowChannels || JSON.stringify(peopleflowChannels) === '[]') {
       return;
     }
-    const channelInfo = peopleflowChannels.filter(item => item.id === Number(raw.cameraId));
+    const channelInfo = peopleflowChannels.filter(item => item.id === Number(cameraId));
     if (channelInfo.length === 0) {
-      return;
+      throw new Error('camera id is not found in peopleflow channels config');
     }
     const data = {
       time: this.ctx.helper.getTimeNow(),

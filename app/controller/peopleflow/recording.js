@@ -6,10 +6,17 @@ class PeopleflowRecordingController extends Controller {
   async recording() {
     const { ctx } = this;
     const raw = ctx.request.body;
-    await ctx.service.peopleflow.recording.recording(raw);
-    ctx.body = {
-      error: 0,
-    };
+    try {
+      await ctx.service.peopleflow.recording.recording(raw);
+      ctx.body = {
+        error: 0,
+      };
+    } catch (err) {
+      ctx.body = {
+        error: 1,
+        message: err.message,
+      };
+    }
   }
 
   async monitoring() {
